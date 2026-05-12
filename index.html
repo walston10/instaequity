@@ -701,6 +701,151 @@
       margin-top: 0.9rem;
       line-height: 1.5;
     }
+    .form-disclaimer a,
+    .footer-legal a {
+      color: var(--green);
+      text-decoration: underline;
+    }
+
+    .form-status {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      display: none;
+    }
+    .form-status.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #BBF7D0;
+    }
+    .form-status.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #FECACA;
+    }
+    .form-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+      color: #CBD5E1;
+      line-height: 1.45;
+    }
+    .form-consent input[type="checkbox"] {
+      margin-top: 0.2rem;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--green);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .form-consent a {
+      color: var(--green);
+      text-decoration: underline;
+    }
+
+    /* ─── LEGAL MODAL ─────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 15, 30, 0.78);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.25rem;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal {
+      background: #fff;
+      color: #1F2937;
+      width: 100%;
+      max-width: 760px;
+      max-height: 88vh;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid #E5E7EB;
+      background: var(--navy);
+      color: #fff;
+    }
+    .modal-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 0.25rem;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--green); }
+    .modal-body {
+      padding: 1.5rem 1.75rem;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .modal-body h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 1.25rem 0 0.4rem;
+    }
+    .modal-body h3:first-child { margin-top: 0; }
+    .modal-body p { margin-bottom: 0.7rem; }
+    .modal-body ul {
+      margin: 0 0 0.7rem 1.25rem;
+      padding: 0;
+    }
+    .modal-body li { margin-bottom: 0.3rem; }
+    .modal-body .effective {
+      font-size: 0.78rem;
+      color: #6B7280;
+      margin-bottom: 1rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 0.5rem 0 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-legal a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--green); }
 
     /* ─── FOOTER ─────────────────────────────────────────────── */
     footer {
@@ -1063,7 +1208,7 @@
       <div class="contact-form-wrap fade-up">
         <h3>Get Your Free Cash Offer</h3>
         <p>Tell us about your property and we'll reach out within 24 hours with a no-obligation offer.</p>
-        <form action="#" method="POST">
+        <form id="contact-form" action="https://formspree.io/f/mwvyyvrp" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label for="fname">First Name</label>
@@ -1099,12 +1244,21 @@
             <label for="message">Tell us about your property</label>
             <textarea id="message" name="message" placeholder="Property address, details, or any questions you have…"></textarea>
           </div>
+          <label class="form-consent">
+            <input type="checkbox" id="consent" name="consent" required />
+            <span>
+              I have read and agree to the
+              <a href="#" data-modal="terms-modal">Terms &amp; Conditions</a>
+              and
+              <a href="#" data-modal="privacy-modal">Privacy Policy</a>,
+              and consent to receive communications from InstaEquity Group.
+            </span>
+          </label>
           <button type="submit" class="form-submit">Send My Free Request →</button>
           <p class="form-disclaimer">
-            By submitting, you consent to receive communications from InstaEquity Group.
-            Message &amp; data rates may apply. Reply STOP to opt out.
-            See our <a href="#" style="color:inherit;">Privacy Policy</a>.
+            Message &amp; data rates may apply. Reply STOP at any time to opt out of text messages.
           </p>
+          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
         </form>
       </div>
     </div>
@@ -1120,8 +1274,135 @@
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="footer-legal">
+      <a href="#" data-modal="terms-modal">Terms &amp; Conditions</a>
+      <a href="#" data-modal="privacy-modal">Privacy Policy</a>
+    </div>
     <p class="footer-copy">© 2025 InstaEquity Group. All rights reserved. | 613 NW Loop 410, Ste 440, San Antonio, TX 78216</p>
   </footer>
+
+  <!-- ── PRIVACY POLICY MODAL ───────────────────────── -->
+  <div class="modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="privacy-title">Privacy Policy</h2>
+        <button type="button" class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="effective"><strong>Insta Equity LLC</strong> &nbsp;|&nbsp; Effective Date: 03-18-2025</p>
+
+        <h3>1. Introduction</h3>
+        <p>Insta Equity LLC (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you visit our website and interact with our services. By using our website, you consent to the practices described in this policy.</p>
+
+        <h3>2. Information We Collect</h3>
+        <p>We may collect the following types of information:</p>
+        <ul>
+          <li><strong>Personal Information:</strong> Name, email address, phone number, mailing address, and any other information you provide when filling out forms or communicating with us.</li>
+          <li><strong>Technical Data:</strong> IP address, browser type, operating system, and other technical details collected automatically through cookies and tracking technologies.</li>
+          <li><strong>Usage Information:</strong> Pages visited, time spent on the site, interactions, and other analytical data to improve user experience.</li>
+        </ul>
+
+        <h3>3. How We Use Your Information</h3>
+        <p>We may use your information for the following purposes:</p>
+        <ul>
+          <li>To provide and improve our services.</li>
+          <li>To communicate with you regarding inquiries, services, or promotional offers.</li>
+          <li>To enhance website functionality and user experience.</li>
+          <li>To comply with legal obligations and protect against fraud or unauthorized access.</li>
+        </ul>
+
+        <h3>4. Sharing of Information</h3>
+        <p>We do not sell or rent your personal information. However, we may share your information with:</p>
+        <ul>
+          <li><strong>Service Providers:</strong> Third-party vendors who assist with website operations, analytics, and marketing.</li>
+          <li><strong>Legal Authorities:</strong> When required by law or to protect our legal rights.</li>
+          <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred.</li>
+        </ul>
+
+        <h3>5. Cookies &amp; Tracking Technologies</h3>
+        <p>We use cookies and similar tracking technologies to enhance your experience. You can control cookie preferences through your browser settings.</p>
+
+        <h3>6. Data Security</h3>
+        <p>We implement security measures to protect your personal data. However, no method of transmission over the internet is 100% secure.</p>
+
+        <h3>7. Your Rights &amp; Choices</h3>
+        <p>You may request to access, update, or delete your personal information by contacting us at <a href="mailto:info.instaequity@gmail.com">info.instaequity@gmail.com</a>. You can also opt out of marketing communications at any time.</p>
+
+        <h3>8. Third-Party Links</h3>
+        <p>Our website may contain links to third-party sites. We are not responsible for their privacy practices.</p>
+
+        <h3>9. Changes to This Policy</h3>
+        <p>We may update this Privacy Policy periodically. Any changes will be posted on this page with the updated effective date.</p>
+
+        <h3>10. Contact Us</h3>
+        <p>If you have any questions about this Privacy Policy, contact us at:</p>
+        <p>
+          Insta Equity LLC<br />
+          613 NW Loop 410, Ste 440, San Antonio, TX 78216<br />
+          <a href="mailto:info.instaequity@gmail.com">info.instaequity@gmail.com</a><br />
+          210-816-0890
+        </p>
+
+        <p><em>By using our website, you acknowledge that you have read and agree to this Privacy Policy.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TERMS & CONDITIONS MODAL ───────────────────── -->
+  <div class="modal-overlay" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="terms-title">Terms &amp; Conditions</h2>
+        <button type="button" class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="effective">Last Updated: 03-18-2025</p>
+
+        <p>Welcome to InstaEquity Group! By accessing our website (<a href="https://www.instaequitygroup.com/" target="_blank" rel="noopener">https://www.instaequitygroup.com/</a>), you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before using our website.</p>
+
+        <h3>1. Acceptance of Terms</h3>
+        <p>By using this website, you acknowledge that you have read, understood, and agree to these Terms and Conditions. If you do not agree with any part of these terms, please do not use our website.</p>
+
+        <h3>2. Changes to Terms</h3>
+        <p>InstaEquity Group reserves the right to modify, update, or remove any part of these Terms and Conditions at any time. It is your responsibility to review this page periodically for any changes.</p>
+
+        <h3>3. Use of Website</h3>
+        <p>You agree to use this website only for lawful purposes. You must not use it in any way that violates any applicable local, state, national, or international laws and regulations.</p>
+
+        <h3>4. Intellectual Property</h3>
+        <p>All content on this website, including but not limited to text, images, graphics, logos, and software, is the property of InstaEquity Group and is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or modify any content without prior written permission.</p>
+
+        <h3>5. Real Estate Transactions Disclaimer</h3>
+        <p>InstaEquity Group is a real estate investment company and does not provide legal, financial, or tax advice. All transactions and agreements made through our website should be reviewed by a professional advisor.</p>
+
+        <h3>6. Third-Party Links</h3>
+        <p>Our website may contain links to third-party websites. InstaEquity Group is not responsible for the content, accuracy, or reliability of any linked sites. Accessing any third-party site is at your own risk.</p>
+
+        <h3>7. Privacy Policy</h3>
+        <p>By using our website, you also agree to our <a href="#" data-modal="privacy-modal">Privacy Policy</a>, which outlines how we collect, use, and protect your personal information. Please review our Privacy Policy for more details.</p>
+
+        <h3>8. Limitation of Liability</h3>
+        <p>InstaEquity Group shall not be held liable for any direct, indirect, incidental, or consequential damages resulting from your use of the website or any transactions made through it.</p>
+
+        <h3>9. Indemnification</h3>
+        <p>You agree to indemnify and hold harmless InstaEquity Group and its affiliates from any claims, damages, or expenses arising from your use of the website or violation of these Terms and Conditions.</p>
+
+        <h3>10. Governing Law</h3>
+        <p>These Terms and Conditions are governed by and construed in accordance with the laws of the State of Texas, without regard to its conflict of law principles.</p>
+
+        <h3>11. Contact Information</h3>
+        <p>For any questions regarding these Terms and Conditions, please contact us at:</p>
+        <p>
+          InstaEquity Group<br />
+          613 NW Loop 410, San Antonio, TX 78216<br />
+          <a href="mailto:info.instaequity@gmail.com">info.instaequity@gmail.com</a><br />
+          210-816-0890
+        </p>
+
+        <p><em>By continuing to use this website, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.</em></p>
+      </div>
+    </div>
+  </div>
 
   <!-- ── SCROLL ANIMATIONS ──────────────────────────── -->
   <script>
@@ -1130,6 +1411,90 @@
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- ── LEGAL MODALS ───────────────────────────────── -->
+  <script>
+    (function () {
+      const openModal = (id) => {
+        const m = document.getElementById(id);
+        if (!m) return;
+        document.querySelectorAll('.modal-overlay.open').forEach(o => o.classList.remove('open'));
+        m.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+      const closeModals = () => {
+        document.querySelectorAll('.modal-overlay.open').forEach(o => o.classList.remove('open'));
+        document.body.style.overflow = '';
+      };
+
+      document.querySelectorAll('[data-modal]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal(el.getAttribute('data-modal'));
+        });
+      });
+      document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', closeModals);
+      });
+      document.querySelectorAll('.modal-overlay').forEach(o => {
+        o.addEventListener('click', (e) => {
+          if (e.target === o) closeModals();
+        });
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModals();
+      });
+    })();
+  </script>
+
+  <!-- ── CONTACT FORM SUBMIT (Formspree AJAX) ───────── -->
+  <script>
+    (function () {
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      if (!form) return;
+      const submitBtn = form.querySelector('.form-submit');
+      const originalLabel = submitBtn.textContent;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.className = 'form-status';
+        status.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            form.reset();
+            status.className = 'form-status success';
+            status.textContent = 'Thanks! We received your request and will be in touch within 24 hours.';
+            submitBtn.textContent = originalLabel;
+            submitBtn.disabled = false;
+          } else {
+            const data = await response.json().catch(() => ({}));
+            const msg = data.errors && data.errors.length
+              ? data.errors.map(err => err.message).join(', ')
+              : 'Something went wrong. Please try again or call us at 210-816-0890.';
+            status.className = 'form-status error';
+            status.textContent = msg;
+            submitBtn.textContent = originalLabel;
+            submitBtn.disabled = false;
+          }
+        } catch (err) {
+          status.className = 'form-status error';
+          status.textContent = 'Network error. Please try again or call us at 210-816-0890.';
+          submitBtn.textContent = originalLabel;
+          submitBtn.disabled = false;
+        }
+      });
+    })();
   </script>
 
 </body>
